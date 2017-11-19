@@ -14,11 +14,16 @@ CREATE TABLE vehiculo (idPoliza INT, modelo VARCHAR(100), PRIMARY KEY (idPoliza)
 CONSTRAINT fk_idPoliza FOREIGN KEY (idPoliza) REFERENCES user (idPoliza));
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 CREATE TABLE formulario (fecha DATE, hora TIME, delegacion VARCHAR(30), nombreConductor VARCHAR(200), sexo CHAR(1),
 nombreAsegurado VARCHAR(200), poliza INT, modeloVehiculo VARCHAR(70), tipoAccidente VARCHAR(50), colision VARCHAR(70));
 
 =======
 >>>>>>> master
+
 
 INSERT INTO user VALUES (1001, 'ADRIANA PAOLA CUJAR ALARCON',  'pass123', NULL,  'f', 28,5510111213);
 INSERT INTO user VALUES (1002, 'ADRIANA GIRALDO GOMEZ',  'pass123', NULL,  'f', 30,5510111214);
