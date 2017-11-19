@@ -351,7 +351,3 @@ INSERT INTO vehiculo VALUES (1147,'Figo');
 INSERT INTO vehiculo VALUES (1148,'Figo');
 INSERT INTO vehiculo VALUES (1149,'Figo');
 INSERT INTO vehiculo VALUES (1150,'Figo');
-
-SELECT *FROM user;
-SELECT *FROM ajustador;
-SELECT *FROM vehiculo;
