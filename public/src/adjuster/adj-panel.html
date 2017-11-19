@@ -1,0 +1,110 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="adj-panel">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                text-align: center;
+            }
+        
+            .modalbtn {
+                background-color: white;
+                color: var(--app-primary-color);
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color:  var(--app-primary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-primary-color);
+                --paper-toggle-button-checked-ink-color: var(--app-primary-color);
+                --paper-toggle-button-unchecked-bar-color:  var(--app-terciary-color);
+                --paper-toggle-button-unchecked-button-color:  var(--app-terciary-color);
+                --paper-toggle-button-unchecked-ink-color: var(--app-terciary-color);
+                display: inline-flex;
+            }
+        </style>
+
+        <div class="row">
+            <div class="col s12">
+                <h1>Panel Ajustador</h1>
+                <paper-toggle-button toggles="{{togg}}">Conectado</paper-toggle-button>
+                <br>
+                <paper-button raised on-tap="recibo">Recibir</paper-button>
+                <paper-dialog id="ask">
+                    <p>Has recibido una solicitud de ajuste</p>
+                    <div class="buttons">
+                        <a href="/adjform">
+                            <paper-button dialog-confirm autofocus class="modalbtn">Revisar</paper-button>
+                        </a>
+                    </div>
+                </paper-dialog>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col s12 offset-m3 m6 offset-l4 l4">
+                <a href="/history">
+                <paper-card heading="Historial de siniestros" image="../images/archive.jpg" alt="Historial" class="white"></paper-card>
+                </a>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `adj-panel` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class AdjPanel extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'adj-panel';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+            recibo() {
+                this.$.ask.open();
+            }
+
+        }
+
+        window.customElements.define(AdjPanel.is, AdjPanel);
+    </script>
+</dom-module>

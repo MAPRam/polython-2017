@@ -1,0 +1,235 @@
+<link rel="stylesheet" href="../../bower_components/webcomponentsjs/webcomponents-lite.js">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<dom-module id="adj-form">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                text-align: center;
+            }
+
+            google-map {
+                height: 300px;
+            }
+
+            paper-dropdown-menu {
+                display: block;
+            }
+        </style>
+
+        <div class="row">
+            <div class="col s12">
+                <h1>Solicitud de ajuste</h1>
+            </div>
+
+            <p>Ubicación del siniestro:</p>
+        </div>
+
+        <google-map fit-to-marker api-key="AIzaSyBo5GkfGaDY3Vfhz-nMwf4oWemPj6uUdUQ" zoom="15">
+            <google-map-marker latitude="37.77493" longitude="-122.41942"></google-map-marker>
+        </google-map>
+
+        <div class="row">
+            <br>
+            <p>Datos del siniestro: </p>
+            <div class="col s12 offset-m1 m5 offset-l2 l4">
+                <paper-dropdown-menu label="Delegaciones">
+                    <paper-listbox slot="dropdown-content" selected="0">
+                        
+                        <template is="dom-repeat" items="[[delegaciones]]">
+                            
+                            <paper-item>[[item.name]]</paper-item>
+                            
+                        </template>
+                        
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-input label="Nombre del conductor"></paper-input>
+                
+                <paper-dropdown-menu label="Delegaciones">
+                    <paper-listbox slot="dropdown-content" selected="0">
+                            
+                            <paper-item>Masculino</paper-item>
+                            
+                            <paper-item>Femenino</paper-item>
+                            
+                    </paper-listbox>
+                </paper-dropdown-menu>
+    
+                
+                <paper-input label="Nombre del asegurado"></paper-input>
+            
+            </div>
+            <div class="col s12 m5 l4">
+
+                <paper-input label="Número de póliza"></paper-input>
+                
+                <paper-dropdown-menu label="Delegaciones">
+                    <paper-listbox slot="dropdown-content" selected="0">
+                        
+                        <template is="dom-repeat" items="[[modelos]]">
+                            
+                            <paper-item>[[item.name]]</paper-item>
+                            
+                        </template>
+                        
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+                <paper-dropdown-menu label="Tipo de colisión">
+                    <paper-listbox slot="dropdown-content" selected="0">
+                        
+                        <template is="dom-repeat" items="[[colisiones]]">
+                            
+                            <paper-item>[[item.name]]</paper-item>
+                            
+                        </template>
+                        
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+                <paper-dropdown-menu label="Tipo de accidente">
+                    <paper-listbox slot="dropdown-content" selected="0">
+                        
+                        <template is="dom-repeat" items="[[accidentes]]">
+                            
+                            <paper-item>[[item.name]]</paper-item>
+                            
+                        </template>
+                        
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+            </div>            
+        </div>
+
+        <div class="row">
+                <paper-button raised>Enviar reporte</paper-button>
+        </div>
+        
+        
+        
+        
+
+    </template>
+
+    <script>
+        /**
+         * `adj-form` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class AdjForm extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'adj-form';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    longitude: {
+                        type: String,
+                        value: '-99.20636599999999'
+                    },
+                    latitude: {
+                        type: String,
+                        value: '19.4287863'
+                    },
+                    delegaciones: Array,
+                    modelos: Array,
+                    colisiones: Array,
+                    accidentes: Array
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    this.delegaciones = [
+                        {name: 'Álvaro Obregón'},
+                        {name: 'Azacapotzalco'},
+                        {name: 'Benito Juárez'},
+                        {name: 'Coyoacán'},
+                        {name: 'Cuajimalpa'},
+                        {name: 'Cuauhtémoc'},
+                        {name: 'Gustavo A. Madero'},
+                        {name: 'Iztacalco'},
+                        {name: 'Iztapalapa'},
+                        {name: 'Magdalena Contreras'},
+                        {name: 'Miguel Hidalgo'},
+                        {name: 'Milpa Alta'},
+                        {name: 'Tláhuac'},
+                        {name: 'Tlalpan'},
+                        {name: 'Venustiano Carranza'},
+                        {name: 'Xochimilco'}
+                    ],
+                    this.modelos = [
+                        {name: 'Aveo'},
+                        {name: 'Figo'},
+                        {name: 'Jetta'},
+                        {name: 'March'},
+                        {name: 'Rio'},
+                        {name: 'Sentra'},
+                        {name: 'Sonic '},
+                        {name: 'Spark'},
+                        {name: 'Vento'},
+                        {name: 'Versa'},
+                    ],
+                    this.colisiones = [
+                        {name: 'Peatón'},
+                        {name: 'Vehículo'},
+                        {name: 'Transporte público'},
+                        {name: 'Edificio'},
+                        {name: 'Columna'},
+                        {name: 'Animal'},
+                        {name: 'Otro '}
+                    ],
+                    this.accidentes = [
+                        {name: 'Frontal'},
+                        {name: 'Inmersión'},
+                        {name: 'Posterior'},
+                        {name: 'Incendio'},
+                        {name: 'Lateral'},
+                        {name: 'Explosión'},
+                        {name: 'En cadena '},
+                        {name: 'Daño con carga'},
+                        {name: 'Volcadura'},
+                        {name: 'Desplazamiento'}
+                    ]
+                });
+            }
+
+        }
+
+        window.customElements.define(AdjForm.is, AdjForm);
+    </script>
+</dom-module>

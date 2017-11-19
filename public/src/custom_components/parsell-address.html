@@ -1,0 +1,110 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+<dom-module id="parsell-address">
+    <template>
+        <style>
+            :host {
+                display: block
+            }
+        </style>
+
+        
+        <iron-ajax
+            id="latlng"
+            url="http://maps.googleapis.com/maps/api/geocode/json?latlng=[[latitude]],[[longitude]]&sensor=true"
+            handle-as="json"
+            on-response="handleResponse"
+            last-response="{{address}}"></iron-ajax>
+        
+        <geo-location latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
+
+    </template>
+
+    <script>
+        /**
+         * `parsell-address` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class ParsellAddress extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'parsell-address';
+            }
+
+            static get observers() {
+                return ['isDone(latitude, longitude)'];
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    latitude: {
+                        type: String,
+                        notify: true
+                    },
+                    longitude: {
+                        type: String,
+                        notify: true
+                    },
+                    parsed: {
+                        type: String,
+                        notify: true
+                    },
+                    address: Object
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+            handleResponse() {
+                var stock = this.address.results[0];
+                this.parsed = stock.address_components[1].long_name + ' ' + 
+                            stock.address_components[0].long_name + ' ' + 
+                            stock.address_components[2].long_name;
+                console.log(this.parsed);
+                console.log(this.latitude);
+                console.log(this.longitude);
+            }
+
+            isDone(latitude, longitude) {
+                if (latitude == null && longitude == null) {
+                    return
+                } else {
+                    this.$.latlng.generateRequest();
+                }
+            }
+
+        }
+
+        window.customElements.define(ParsellAddress.is, ParsellAddress);
+    </script>
+</dom-module>

@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../custom_components/jwt-login.html">
+
+<dom-module id="adj-login">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                text-align: center;
+            }
+        </style>
+
+        <app-location
+            route="{{route}}">
+        </app-location>
+
+        <app-localstorage-document key="userData" data="{{storedUser}}"></app-localstorage-document>
+
+        <div class="row">
+            <div class="col s12 offset-m2 m8 offset-l4 l4">
+                <jwt-login
+                    main-message="Inicia sesión para acceder a los servicios para ajustadores"
+                    custom-error="Error al iniciar sesión, verifica que tus datos sean correctos"
+                    page-for-redirect="/adjpanel"></jwt-login>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `adj-login` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class AdjLogin extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'adj-login';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+        }
+
+        window.customElements.define(AdjLogin.is, AdjLogin);
+    </script>
+</dom-module>

@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="ins-policy">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block
+            }
+        </style>
+
+        <div class="row">
+            <div class="col">
+                <h1>Póliza</h1>
+                <p>En esta sección encontarrás los detallaes de tu póliza</p>
+                <p>
+                    <b>Cobertura:</b> Amplia
+                </p>
+                <p>
+                    <b>Vencimiento:</b> 20 de Noviembre de 2017
+                </p>
+            </div>
+        </div>
+        
+
+    </template>
+
+    <script>
+        /**
+         * `ins-policy` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class InsPolicy extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'ins-policy';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+        }
+
+        window.customElements.define(InsPolicy.is, InsPolicy);
+    </script>
+</dom-module>

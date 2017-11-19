@@ -10,27 +10,32 @@
         text-align: center;
       }
 
-      paper-card {
-        max-height: 190px;
-      }
-
     </style>
 
     <div class="main-section">
       <h1>Panel</h1>
       <p>Servicios:</p>
     
-      <a href="">
-        <paper-card heading="Reportar accidente" image="../images/collapse.jpg" alt="Desastre" class="white"></paper-card>
-      </a>
+     <div class="row">
 
-      <a href="">
-        <paper-card heading="Póliza digital" image="../images/document.jpg" alt="Póliza" class="white"></paper-card>
-      </a>
+      <div class="col s12 l4">
+        <a href="/report">
+          <paper-card heading="Reportar accidente" image="../images/collapse.jpg" alt="Desastre" class="white"></paper-card>
+        </a>
+      </div>
 
-      <a href="">
-        <paper-card heading="Historial de siniestros" image="../images/archive.jpg" alt="Historial" class="white"></paper-card>
-      </a>
+      <div class="col s12 l4">
+        <a href="/policy">
+          <paper-card heading="Póliza digital" image="../images/document.jpg" alt="Póliza" class="white"></paper-card>
+        </a>
+      </div>
+
+      <div class="col s12 l4">
+        <a href="/history">
+          <paper-card heading="Historial de siniestros" image="../images/archive.jpg" alt="Historial" class="white"></paper-card>
+        </a>
+      </div>
+    </div>
       
     </div>
   </template>

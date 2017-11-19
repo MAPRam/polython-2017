@@ -1,50 +1,110 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/titanium-address-input/titanium-address-input.html">
+<link rel="import" href="custom_components/parsell-address.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
 
 <dom-module id="ins-report">
     <template>
         <style include="shared-styles">
             :host {
                 display: block;
+                text-align: center;
+            }
+
+            .buttons > paper-button {
+                color: var(--app-fourty-color);
+                background-color: white;
+            }
+
+            paper-progress {
+                width: 100%;
+                --paper-progress-active-color: cyan;
+                --paper-progress-container-color: var(--app-terciary-color);
+            }
+
+            .cyan {
+                background-color: var(--app-terciary-color);
             }
         </style>
 
-        <div class="main-section">
-            <h1>Reporte</h1>
+        <app-location
+            route="{{route}}">
+        </app-location>
 
-            <paper-input label="Ubicación" value="My address"></paper-input>
-        
-            <paper-button raised on-tap="trigAsk">Generar reporte</paper-button>
-            
-            <paper-dialog id="ask">
-                <p>¿Seguro que desea enviar el reporte?</p>
-                <div class="buttons">
-                    <paper-button dialog-dismiss>Cancelar</paper-button>
-                    <paper-button dialog-confirm autofocus>Aceptar</paper-button>
-                </div>
-            </paper-dialog>
+        <template is="dom-if" if="[[loading]]">
+            <paper-progress indeterminate class="blue"></paper-progress>
+        </template>
 
-            <div>
-                <h3>Usuario, se ha generado tu reporte</h3>
-                <p>
-                    <b>Dirección del siniestro: </b>
-                    Montes Uralles 443
-                </p>
+        <div class="row">
+            <div class="col s12 offset-m1 m10 offset-l3 l6">
+                <br>
+                <h1>Reporte</h1>
 
-                <p>
-                    <b>Fecha:</b>
-                    17 de Noviembre
-                </p>
+                
+                <template is="dom-if" if="[[!done]]">
+                    <p>Confirme su dirección antes de generar el reporte</p>
 
-                <p>
-                    <b>Hora:</b>
-                    17:19 hrs
-                </p>
+                    <titanium-address-input 
+                        label="Home Address" 
+                        api-key="AIzaSyBo5GkfGaDY3Vfhz-nMwf4oWemPj6uUdUQ"
+                        value="{{pars}}">
+                    </titanium-address-input>
 
-                <p>Tu ajustador de seguros llegará en unos minutos</p>
+                    <parsell-address parsed="{{pars}}"></parsell-address>
+                    
+                    <paper-button raised on-tap="trigAsk">Generar reporte</paper-button>
+                </template>
+                
+                <paper-dialog id="ask">
+                    <p>¿Seguro que desea enviar el reporte?</p>
+                    <div class="buttons">
+                        <paper-button dialog-dismiss>Cancelar</paper-button>
+                        <paper-button dialog-confirm autofocus on-tap="trigLoading">Aceptar</paper-button>
+                    </div>
+                </paper-dialog>
+
+                
+                <template is="dom-if" if="[[done]]">
+                
+                    <div>
+                        <h3>Usuario, se ha generado tu reporte</h3>
+                        <p>
+                            <b>Dirección del siniestro: </b>
+                            [[pars]]
+                        </p>
+
+                        <p>
+                            <b>Fecha:</b>
+                            [[cdate]]
+                        </p>
+
+                        <p>
+                            <b>Hora:</b>
+                            [[ctime]]
+                        </p>
+
+                        <p>Tu ajustador de seguros llegará en unos minutos</p>
+                        <p>Si no se presenta a tiempo:</p> <br>
+
+                        <paper-card heading="Llámalo" class="cyan">
+                            <div class="card-actions">
+                                <paper-icon-button icon="communication:call" style="color:white;"></paper-icon-button>
+                                <span>55 12002105</span>
+                            </div>
+                        </paper-card>
+                        <br> <br>
+                        <p>Cuando hayas recibido todas las indicaciones de tu ajustador, indica que la atención ha:</p>
+                        
+                        <paper-button raised on-tap="sessionDone">Finalizado</paper-button>
+                        
+                    </div>
+
+                </template>
+                
+                
             </div>
-            
-            
         </div>
 
     </template>
@@ -71,7 +131,21 @@
              */
             static get properties() {
                 return {
-                    
+                    cdate: {
+                        computed: 'getCurrentDate()'
+                    },
+
+                    ctime: {
+                        computed: 'getCurrentTime()'
+                    },
+                    loading: {
+                        type: Boolean,
+                        value: false
+                    },
+                    done: {
+                        type: Boolean,
+                        value: false
+                    }
                 };
             }
 
@@ -97,6 +171,35 @@
 
             trigAsk() {
                 this.$.ask.open();
+            }
+
+            getCurrentDate() {
+                var currentdate = new Date();
+                return currentdate.getDate() + "/" + (currentdate.getMonth()+1)  + "/" + currentdate.getFullYear();
+            }
+
+            getCurrentTime() {
+                var currentdate = new Date();
+                return currentdate.getHours() + ":"  + currentdate.getMinutes();
+            }
+
+            trigLoading() {
+                var local = this;
+                this.loading = true;
+
+                setTimeout(function() {
+                    local.showDone();
+                }, 3000)
+            }
+
+            showDone() {
+                this.done = true;
+                this.loading = false;
+            }
+
+            sessionDone() {
+                this.set('route.path', '/panel');
+                this.done = false;
             }
 
         }
