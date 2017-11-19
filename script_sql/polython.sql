@@ -5,7 +5,7 @@ USE segurosDB;
 
 
 CREATE TABLE user (idPoliza INT, name VARCHAR(200), password VARCHAR(25),
-email VARCHAR(60), sex CHAR(1), age INT, phone BIGINT, PRIMARY KEY(idPoliza)); 
+email VARCHAR(60), sex CHAR(1), age INT, phone BIGINT, latitud VARCHAR(30), longitud VARCHAR(30), PRIMARY KEY(idPoliza)); 
 
 CREATE TABLE ajustador (idEmpleado INT, nameE VARCHAR(200), passwordE VARCHAR(25),
 disponible INT, PRIMARY KEY(idEmpleado));
