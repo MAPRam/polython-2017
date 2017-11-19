@@ -1,0 +1,82 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="ins-login">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        text-align: center;
+      }
+
+    </style>
+
+    <app-location
+      route="{{route}}">
+    </app-location>
+
+    <div class="main-section">
+
+      <h1>Iniciar Sesión</h1>
+      <p>Inicia sesión para reportar siniestros o ver tu póliza digital</p>
+
+      <template is="dom-if" if="{{error}}">
+        <div class="error-box">
+          <p>Error al iniciar sesión, revise que todos los datos sean correctos</p>
+        </div>
+      </template>
+      
+      <paper-input label="Usuario" value="{{formData.user}}"></paper-input>
+      
+      <paper-input label="Contraseña" type="password" value="{{formData.password}}"></paper-input>
+
+      <paper-button raised on-tap="postLogin">Entrar</paper-button>
+      
+      <p>¿No tienes una cuenta? <br> <a href="/signup" class="terciary-color">Regístrate</a></p>
+      
+    </div>
+  </template>
+
+  <script>
+    class InsLogin extends Polymer.Element {
+      static get is() { return 'ins-login'; }
+
+      static get properties() {
+        return {
+          formData: {
+            type: Object,
+            value: {}
+          },
+          error: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      postLogin() {
+        if (this.formData.user == 'hi' && this.formData.password == 'wo') {
+          console.log('Sesión iniciada');
+          this.set('route.path', '/panel');
+          this.error = false;
+        } else {
+          console.error('Error');
+          this.error = true;
+        }
+      }
+
+    }
+
+    window.customElements.define(InsLogin.is, InsLogin);
+  </script>
+</dom-module>

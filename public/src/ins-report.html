@@ -1,0 +1,106 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="ins-report">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+
+        <div class="main-section">
+            <h1>Reporte</h1>
+
+            <paper-input label="Ubicación" value="My address"></paper-input>
+        
+            <paper-button raised on-tap="trigAsk">Generar reporte</paper-button>
+            
+            <paper-dialog id="ask">
+                <p>¿Seguro que desea enviar el reporte?</p>
+                <div class="buttons">
+                    <paper-button dialog-dismiss>Cancelar</paper-button>
+                    <paper-button dialog-confirm autofocus>Aceptar</paper-button>
+                </div>
+            </paper-dialog>
+
+            <div>
+                <h3>Usuario, se ha generado tu reporte</h3>
+                <p>
+                    <b>Dirección del siniestro: </b>
+                    Montes Uralles 443
+                </p>
+
+                <p>
+                    <b>Fecha:</b>
+                    17 de Noviembre
+                </p>
+
+                <p>
+                    <b>Hora:</b>
+                    17:19 hrs
+                </p>
+
+                <p>Tu ajustador de seguros llegará en unos minutos</p>
+            </div>
+            
+            
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `ins-report` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class InsReport extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'ins-report';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+            trigAsk() {
+                this.$.ask.open();
+            }
+
+        }
+
+        window.customElements.define(InsReport.is, InsReport);
+    </script>
+</dom-module>

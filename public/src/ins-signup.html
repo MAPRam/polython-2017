@@ -1,0 +1,90 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="ins-signup">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                text-align: center;
+            }
+        </style>
+
+        <div class="main-section">
+            <h1>Registrarse</h1>
+            <p>Si ya has firmado el contrato de tu póliza, regístrate para
+                tener un fácil acceso a tus servicios
+            </p>
+
+            <paper-input label="Nombre completo"></paper-input>
+            
+            <paper-input label="Correo electrónico"></paper-input>
+            
+            <paper-input label="Número de teléfono"></paper-input>
+            
+            <paper-input label="Número de póliza"></paper-input>
+            
+            <paper-input label="Número de Póliza"></paper-input>
+            
+            <paper-input label="Crear contraseña" type="password"></paper-input>
+            
+            <paper-input label="Confirmar contraseña" type="password"></paper-input>
+            
+            <paper-button raised>Enviar</paper-button>
+            
+            <p>¿Ya tienes una cuenta? <br> <a class="terciary-color" href="/login">Accede</a></p>
+            
+        </div>
+
+    </template>
+
+    <script>
+        /**
+         * `ins-signup` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class InsSignup extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'ins-signup';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    
+                });
+            }
+
+        }
+
+        window.customElements.define(InsSignup.is, InsSignup);
+    </script>
+</dom-module>

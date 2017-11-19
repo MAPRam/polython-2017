@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="ins-panel">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        text-align: center;
+      }
+
+      paper-card {
+        max-height: 190px;
+      }
+
+    </style>
+
+    <div class="main-section">
+      <h1>Panel</h1>
+      <p>Servicios:</p>
+    
+      <a href="">
+        <paper-card heading="Reportar accidente" image="../images/collapse.jpg" alt="Desastre" class="white"></paper-card>
+      </a>
+
+      <a href="">
+        <paper-card heading="Póliza digital" image="../images/document.jpg" alt="Póliza" class="white"></paper-card>
+      </a>
+
+      <a href="">
+        <paper-card heading="Historial de siniestros" image="../images/archive.jpg" alt="Historial" class="white"></paper-card>
+      </a>
+      
+    </div>
+  </template>
+
+  <script>
+    class InsPanel extends Polymer.Element {
+      static get is() { return 'ins-panel'; }
+    }
+
+    window.customElements.define(InsPanel.is, InsPanel);
+  </script>
+</dom-module>

@@ -1,0 +1,175 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="my-icons.html">
+
+<link rel="import" href="ins-login.html">
+<link rel="import" href="ins-panel.html">
+<link rel="import" href="ins-signup.html">
+<link rel="import" href="ins-report.html">
+<link rel="import" href="ins-not-found.html">
+
+<dom-module id="ins-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #263238;
+        --app-secondary-color: black;
+        --app-terciary-color: #90A4AE;
+        --app-fourty-color: #455A64; 
+        --paper-input-container-focus-color: var(--app-primary-color);
+        --paper-card-header-color: white;
+
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+    </style>
+
+    <app-location
+        route="{{route}}">
+    </app-location>
+
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}">
+    </app-route>
+
+    <app-drawer-layout fullbleed force-narrow>
+      <!-- Drawer content -->
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="login" href="/login">Login</a>
+          <a name="panel" href="/panel">Panel</a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header slot="header" condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <div main-title>Seguros</div>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages
+            selected="[[page]]"
+            attr-for-selected="name"
+            fallback-selection="not-found"
+            selected-attribute="visible"
+            role="main">
+          <ins-login name="login"></ins-login>
+          <ins-panel name="panel"></ins-panel>
+          <ins-signup name="signup"></ins-signup>
+          <ins-report name="report"></ins-report>
+          <ins-not-found name="not-found"></ins-not-found>
+        </iron-pages>
+      </app-header-layout>
+    </app-drawer-layout>
+  </template>
+
+  <script>
+    class InsApp extends Polymer.Element {
+      static get is() { return 'ins-app'; }
+
+      static get properties() {
+        /*return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+          routeData: Object,
+          subroute: String,
+          // This shouldn't be neccessary, but the Analyzer isn't picking up
+          // Polymer.Element#rootPath
+          rootPath: String,
+        };*/
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      _routePageChanged(page) {
+        // If no page was found in the route data, page will be an empty string.
+        // Default to 'view1' in that case.
+        this.page = page || 'login';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      _pageChanged(page, oldPage) {
+        if (page != null) {
+          // home route is eagerly loaded
+          if (page == 'login') {
+            this._pageLoaded(Boolean(oldPage));
+          // other routes are lazy loaded
+          } else {
+            // When a load failed, it triggered a 404 which means we need to
+            // eagerly load the 404 page definition
+            let cb = this._pageLoaded.bind(this, Boolean(oldPage));
+            Polymer.importHref(
+              this.resolveUrl('ins-' + page + '.html'),
+              cb, cb, true);
+          }
+        }
+      }
+
+      _showPage404() {
+        this.page = 'ins-not-found';
+      }
+    }
+
+    window.customElements.define(InsApp.is, InsApp);
+  </script>
+</dom-module>
